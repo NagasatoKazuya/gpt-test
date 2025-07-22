@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Popularity Poll</title>
+</head>
+<body>
+    <h1>Vote for your favorite candidate</h1>
+    <form action="/vote" method="post">
+        {% for candidate in candidates %}
+        <input type="checkbox" name="candidate_ids" value="{{ candidate.id }}" id="cand_{{ candidate.id }}">
+        <label for="cand_{{ candidate.id }}">{{ candidate.name }} ({{ candidate.votes }} votes)</label><br>
+        {% endfor %}
+        <button type="submit">Submit Vote</button>
+    </form>
+</body>
+</html>
