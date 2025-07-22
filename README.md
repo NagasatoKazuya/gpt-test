@@ -54,3 +54,19 @@ Once PostgreSQL is running and configured, continue with the steps below to init
    uvicorn main:app --reload
    ```
 5. Open `http://localhost:8000` in your browser to vote and view results.
+
+## Docker
+
+You can also run the application and PostgreSQL entirely in Docker using the
+provided `docker-compose.yml` file.
+
+1. Build and start the services:
+   ```bash
+   docker compose up --build
+   ```
+2. Visit `http://localhost:8000` to use the app. The database is stored in the
+   `postgres_data` volume and will persist between runs.
+3. When you're done, stop the containers with `Ctrl+C` and remove them with:
+   ```bash
+   docker compose down
+   ```
