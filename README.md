@@ -1,72 +1,70 @@
-# FastAPI Popularity Poll
+# FastAPI 人気投票アプリ
 
-This project is a simple web application for voting in a popularity poll. It uses FastAPI for the backend and PostgreSQL for data storage.
+このプロジェクトは人気投票を行うためのシンプルな Web アプリケーションです。バックエンドには FastAPI を、データ保存には PostgreSQL を使用しています。
 
-## PostgreSQL Setup
+## PostgreSQL のセットアップ
 
-The application expects a local PostgreSQL server. The steps below show a basic setup.
+アプリケーションはローカルに PostgreSQL サーバーがあることを前提としています。以下に基本的なセットアップ手順を示します。
 
-1. **Install PostgreSQL**
+1. **PostgreSQL のインストール**
 
-   On Ubuntu/Debian systems:
+   Ubuntu/Debian 系の場合:
    ```bash
    sudo apt-get update
    sudo apt-get install postgresql
    ```
 
-   On macOS with Homebrew:
+   macOS で Homebrew を使う場合:
    ```bash
    brew install postgresql
    ```
 
-2. **Create the database and user**
+2. **データベースとユーザーの作成**
 
-   Start the PostgreSQL service and then run:
+   PostgreSQL サービスを開始したら次のコマンドを実行します。
    ```bash
    sudo -u postgres psql -c "CREATE DATABASE polls;"
    sudo -u postgres psql -c "CREATE USER postgres WITH ENCRYPTED PASSWORD 'password';"
    sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE polls TO postgres;"
    ```
-   Adjust the username or password if you prefer different credentials.
+   ユーザー名やパスワードは必要に応じて変更してください。
 
-3. **Verify the connection URL**
+3. **接続 URL の確認**
 
-   Ensure `DATABASE_URL` in `database.py` matches your setup. By default it is:
+   `database.py` の `DATABASE_URL` が設定に合っていることを確認します。デフォルトでは次のようになっています。
    ```
    postgresql://postgres:password@localhost/polls
    ```
 
-Once PostgreSQL is running and configured, continue with the steps below to initialize and run the app.
+PostgreSQL が起動して設定できたら、以下の手順でアプリを初期化して実行します。
 
-## Setup
+## セットアップ
 
-1. Install dependencies:
+1. 依存関係をインストールします。
    ```bash
    pip install -r requirements.txt
    ```
-2. Ensure PostgreSQL is running and that `DATABASE_URL` in `database.py` matches your configuration.
-3. Initialize the database with some sample candidates:
+2. PostgreSQL が動作しており、`database.py` の `DATABASE_URL` が自分の設定に合っているかを確認します。
+3. サンプルの候補者でデータベースを初期化します。
    ```bash
    python init_db.py
    ```
-4. Run the application:
+4. アプリケーションを起動します。
    ```bash
    uvicorn main:app --reload
    ```
-5. Open `http://localhost:8000` in your browser to vote and view results.
+5. ブラウザで `http://localhost:8000` を開き、投票や結果表示を行います。
 
 ## Docker
 
-You can also run the application and PostgreSQL entirely in Docker using the
-provided `docker-compose.yml` file.
+付属の `docker-compose.yml` ファイルを使って、アプリケーションと PostgreSQL を Docker 上で動かすこともできます。
 
-1. Build and start the services:
+1. サービスをビルドして起動します。
    ```bash
    docker compose up --build
    ```
-2. Visit `http://localhost:8000` to use the app. The database is stored in the
-   `postgres_data` volume and will persist between runs.
-3. When you're done, stop the containers with `Ctrl+C` and remove them with:
+2. `http://localhost:8000` にアクセスするとアプリを利用できます。データベースは `postgres_data` ボリュームに保存され、コンテナを再起動しても残ります。
+3. 終了する際は `Ctrl+C` で停止し、以下のコマンドでコンテナを削除します。
    ```bash
    docker compose down
    ```
